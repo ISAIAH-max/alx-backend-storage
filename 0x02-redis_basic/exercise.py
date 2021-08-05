@@ -22,12 +22,18 @@ class Cache:
 
     def get(self, key: str,
             fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+        """This method take a key string argument and an optional
+           Callable argument named fn
+        """
         if fn:
             return fn(self._redis.get(key))
         return self._redis.get(keys)
 
     def get_str(self, data: str) -> str:
-        """Convert the bytes to str"""
+        """Most common return type across redis-py is bytes 
+           rather than str. Depending to our requirement 
+           we Convert the bytes to str
+        """
         return self._redis.get(data).decode('utf-8')
 
     def get_int(self, data: str) -> str:
