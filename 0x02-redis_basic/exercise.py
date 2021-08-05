@@ -27,10 +27,8 @@ class Cache:
         return self._redis.get(keys)
 
     def get_str(self, data: str) -> str:
-        """Most common return type in redis-py is bytes rather than str
-           Therefore this function Convert the bytes to str
-        """
-        return self._redis.get(data).decode("utf-8")
+        """Convert the bytes to str"""
+        return self._redis.get(data).decode('utf-8')
 
     def get_int(self, data: str) -> str:
         """Convert bytes to int"""
