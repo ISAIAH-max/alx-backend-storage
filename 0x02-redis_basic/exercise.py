@@ -5,7 +5,7 @@
 """
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable, Optional
 
 class Cache:
     """A redis cache class"""
@@ -19,3 +19,19 @@ class Cache:
         key = str(uuid.uuid1())
         self._redis.mset({key: data})
         return key
+
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+        if fn:
+            return fn(self._redis.get(key))
+        return self._redis.get(keys)
+
+    def get_str(self, data: str) -> str:
+        """Most common return type in redis-py is bytes rather than str
+           Therefore this function Convert the bytes to str
+        """
+        return self._redis.get(data).decode("utf-8")
+
+    def get_int(self, data: str) -> str:
+        """Convert bytes to int"""
+        return int(self._redis.get(data))
